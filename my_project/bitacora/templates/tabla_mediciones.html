@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Datos del Experimento</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>📊 Tabla de Mediciones</h1>
+
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr>
+                <th>Día</th>
+                <th>Altura (cm)</th>
+                <th>Fecha Registro</th>
+                <th>Estudiante</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for medicion in mediciones %}
+                <tr>
+                    <td>{{ medicion.dia }}</td>
+                    <td>{{ medicion.altura }}</td>
+                    <td>{{ medicion.fecha_registro }}</td>
+                    <td>{{ medicion.estudiante.nombre }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="4">No hay mediciones registradas aún.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p><a href="{% url 'index' %}">⬅️ Volver al inicio</a></p>
+</body>
+</html>

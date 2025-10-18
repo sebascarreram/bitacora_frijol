@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro Fotográfico</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>📸 Registro Fotográfico</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Subir Foto</button>
+    </form>
+
+    <p><a href="{% url 'index' %}">⬅️ Volver al inicio</a></p>
+
+    {% if fotos %}
+        <h2>Fotos registradas</h2>
+        <ul>
+            {% for foto in fotos %}
+                <li>
+                    <img src="{{ foto.imagen.url }}" alt="Foto de {{ foto.estudiante }}" width="150">
+                    <p>{{ foto.comentario }}</p>
+                    <small>{{ foto.fecha }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

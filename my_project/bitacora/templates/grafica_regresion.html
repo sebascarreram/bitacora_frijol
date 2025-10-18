@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gráfica de Regresión</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>📈 Gráfica de Regresión Lineal</h1>
+
+    {% if grafica %}
+        <img src="data:image/png;base64,{{ grafica }}" alt="Gráfica de Regresión">
+    {% else %}
+        <p>No hay datos suficientes para generar la gráfica.</p>
+    {% endif %}
+
+    <p><a href="{% url 'index' %}">⬅️ Volver al inicio</a></p>
+</body>
+</html>

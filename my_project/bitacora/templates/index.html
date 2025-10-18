@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bitácora del Fríjol</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f5f7fa;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        background-color: #388e3c;
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+      }
+      h1 {
+        margin: 0;
+        font-size: 2em;
+      }
+      main {
+        max-width: 800px;
+        margin: 40px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      }
+      .menu {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+      .menu a {
+        display: block;
+        background-color: #66bb6a;
+        color: white;
+        text-decoration: none;
+        padding: 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+      }
+      .menu a:hover {
+        background-color: #2e7d32;
+      }
+      footer {
+        text-align: center;
+        padding: 15px;
+        background-color: #eee;
+        color: #555;
+        margin-top: 40px;
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>🌱 Bitácora del Fríjol</h1>
+      <p>Proyecto de Laboratorio de Software III</p>
+    </header>
+
+    <main>
+      <h2>Menú principal</h2>
+      <div class="menu">
+        <a href="{% url 'registrar_estudiante' %}">👩‍🎓 Registrar Estudiante</a>
+        <a href="{% url 'registrar_medicion' %}">📏 Registrar Medición</a>
+        <a href="{% url 'registro_fotografico' %}">📸 Registro Fotográfico</a>
+        <a href="{% url 'tabla_mediciones' %}">📊 Ver Datos del Experimento</a>
+        <a href="{% url 'grafica_regresion' %}">📈 Ver Gráfica de Regresión</a>
+        <a href="{% url 'exportar_csv' %}">📤 Exportar Datos a CSV</a>
+      </div>
+    </main>
+
+    <footer>
+      © 2025 - Universidad San Buenaventura Cali | Desarrollado por {{
+      user.username|default:"Equipo 2" }}
+    </footer>
+  </body>
+</html>
