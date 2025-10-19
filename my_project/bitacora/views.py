@@ -1,22 +1,37 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.base import View
+# from .models import Usuarios, RegistroFotografico, Registro, Planta
+from .models import Usuarios
+
 
 # Create your views here.
 
 class Index(View):
     def get(self, request):
-        # return HttpResponse(content="Hola mundo desde django")
-        data = {
-            "name_application": "Aplicacion de prueba 1",
-            "fecha_creacion": "Julio 28 de julio",
-            "version": 1,
-            "tecnologias": ["Python", "Django", "HTML", "CSS"],
-        }
-        return render(request, "index.html", context=data)
+        return render(request, "index.html")
     
+# 👩‍🎓 Registrar estudiante
 class RegistrarEstudiante(View):
     def get(self, request):
         return render(request, "registrar_estudiante.html")
+
+    def post(self, request):
+        nombre = request.POST["nombre_usuario"]
+        correo = request.POST["correo_electronico"]
+        contrasena = request.POST["contrasena_usuario"]
+        edad = request.POST.get("edad", None)
+        telefono = request.POST.get("telefono_celular", "")
+        rol = request.POST.get("rol", "Estudiante")
+
+        Usuarios.objects.create(
+            nombre_usuario=nombre,
+            correo_electronico=correo,
+            contrasena_usuario=contrasena,
+            edad=edad if edad else None,
+            telefono_celular=telefono,
+            rol=rol
+        )
+        return redirect("index")
 
 class RegistrarMedicion(View):
     def get(self, request):

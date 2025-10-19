@@ -3,18 +3,127 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Estudiante</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            background: #fff;
+            margin: 80px auto;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #34495e;
+        }
+
+        form input, form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        form input:focus, form select:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0,123,255,0.2);
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .back-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>👩‍🎓 Registrar Estudiante</h1>
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Guardar</button>
-    </form>
+    <div class="container">
+        <h1>👩‍🎓 Registrar Estudiante</h1>
 
-    <p><a href="{% url 'index' %}">⬅️ Volver al inicio</a></p>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <label for="nombre_usuario">Nombre completo</label>
+            <input type="text" name="nombre_usuario" id="nombre_usuario" required>
+
+            <label for="correo_electronico">Correo electrónico</label>
+            <input type="email" name="correo_electronico" id="correo_electronico" required>
+
+            <label for="contrasena_usuario">Contraseña</label>
+            <input type="password" name="contrasena_usuario" id="contrasena_usuario" required>
+
+            <label for="edad">Edad</label>
+            <input type="number" name="edad" id="edad" min="1" max="120">
+
+            <label for="telefono_celular">Teléfono</label>
+            <input type="text" name="telefono_celular" id="telefono_celular">
+
+            <label for="rol">Rol</label>
+            <select name="rol" id="rol" required>
+                <option value="">Seleccione un rol</option>
+                <option value="Estudiante">Estudiante</option>
+                <option value="Docente">Docente</option>
+                <option value="Investigador">Investigador</option>
+            </select>
+
+            <button type="submit">Guardar Estudiante</button>
+        </form>
+
+        <div class="back-link">
+            <a href="{% url 'index' %}">← Volver al inicio</a>
+        </div>
+    </div>
+
 </body>
 </html>

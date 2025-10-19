@@ -3,35 +3,114 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Datos del Experimento</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            background: #fff;
+            margin: 60px auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 20px;
+            color: #555;
+            font-size: 16px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>📊 Tabla de Mediciones</h1>
 
-    <table border="1" cellpadding="5">
-        <thead>
-            <tr>
-                <th>Día</th>
-                <th>Altura (cm)</th>
-                <th>Fecha Registro</th>
-                <th>Estudiante</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for medicion in mediciones %}
-                <tr>
-                    <td>{{ medicion.dia }}</td>
-                    <td>{{ medicion.altura }}</td>
-                    <td>{{ medicion.fecha_registro }}</td>
-                    <td>{{ medicion.estudiante.nombre }}</td>
-                </tr>
-            {% empty %}
-                <tr><td colspan="4">No hay mediciones registradas aún.</td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+        <h1>📊 Datos del Experimento</h1>
 
-    <p><a href="{% url 'index' %}">⬅️ Volver al inicio</a></p>
+        {% if mediciones %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Planta</th>
+                        <th>Altura (cm)</th>
+                        <th>Hojas</th>
+                        <th>Horas de Luz</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in mediciones %}
+                    <tr>
+                        <td>{{ m.id_registro }}</td>
+                        <td>{{ m.id_planta.nombre_comun }}</td>
+                        <td>{{ m.altura_cm }}</td>
+                        <td>{{ m.hojas }}</td>
+                        <td>{{ m.luz_horas }}</td>
+                        <td>{{ m.fecha_registro }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="no-data">No hay mediciones registradas aún.</p>
+        {% endif %}
+
+        <div class="back-link">
+            <a href="{% url 'index' %}">← Volver al inicio</a>
+        </div>
+    </div>
+
 </body>
 </html>

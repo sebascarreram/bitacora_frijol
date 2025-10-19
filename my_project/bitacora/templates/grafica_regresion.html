@@ -3,18 +3,111 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Gráfica de Regresión</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfica de Regresión - Crecimiento del Fríjol</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 60px auto;
+            background: #fff;
+            padding: 40px 50px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 400px !important;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .back-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>📈 Gráfica de Regresión Lineal</h1>
 
-    {% if grafica %}
-        <img src="data:image/png;base64,{{ grafica }}" alt="Gráfica de Regresión">
-    {% else %}
-        <p>No hay datos suficientes para generar la gráfica.</p>
-    {% endif %}
+    <div class="container">
+        <h1>📈 Gráfica de Regresión del Crecimiento del Fríjol</h1>
 
-    <p><a href="{% url 'index' %}">⬅️ Volver al inicio</a></p>
+        <canvas id="graficaAltura"></canvas>
+
+        <div class="back-link">
+            <a href="{% url 'index' %}">← Volver al inicio</a>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById("graficaAltura");
+
+        // const data = {
+        //     labels: {{ labels|safe }},
+        //     datasets: [{
+        //         label: "Altura (cm)",
+        //         data: {{ alturas|safe }},
+        //         borderColor: "rgba(0, 123, 255, 1)",
+        //         backgroundColor: "rgba(0, 123, 255, 0.2)",
+        //         borderWidth: 3,
+        //         tension: 0.3,
+        //         fill: true,
+        //         pointBackgroundColor: "rgba(0, 123, 255, 1)",
+        //         pointRadius: 5
+        //     }]
+        // };
+
+        const config = {
+            type: "line",
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true },
+                    title: {
+                        display: true,
+                        text: "Crecimiento del Fríjol - Altura vs Fecha",
+                        color: "#2c3e50",
+                        font: { size: 18, weight: "bold" }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: { display: true, text: "Fecha", color: "#555" }
+                    },
+                    y: {
+                        title: { display: true, text: "Altura (cm)", color: "#555" },
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        new Chart(ctx, config);
+    </script>
+
 </body>
 </html>

@@ -3,31 +3,121 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro Fotográfico</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            background: #fff;
+            margin: 80px auto;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #34495e;
+        }
+
+        form input, form select, form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        form input:focus, form select:focus, form textarea:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0,123,255,0.2);
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .back-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>📸 Registro Fotográfico</h1>
 
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Subir Foto</button>
-    </form>
+    <div class="container">
+        <h1>Registro Fotográfico</h1>
 
-    <p><a href="{% url 'index' %}">⬅️ Volver al inicio</a></p>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <label for="planta">Planta</label>
+            <select id="planta" name="planta" required>
+                <option value="">Seleccione una planta</option>
+                {% for planta in plantas %}
+                    <option value="{{ planta.id_planta }}">{{ planta.nombre_comun }}</option>
+                {% endfor %}
+            </select>
 
-    {% if fotos %}
-        <h2>Fotos registradas</h2>
-        <ul>
-            {% for foto in fotos %}
-                <li>
-                    <img src="{{ foto.imagen.url }}" alt="Foto de {{ foto.estudiante }}" width="150">
-                    <p>{{ foto.comentario }}</p>
-                    <small>{{ foto.fecha }}</small>
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+            <label for="imagen">Fotografía</label>
+            <input type="file" name="imagen" id="imagen" accept="image/*" required>
+
+            <label for="comentario">Comentario</label>
+            <textarea name="comentario" id="comentario" rows="4" placeholder="Escribe una breve observación..."></textarea>
+
+            <label for="fecha">Fecha</label>
+            <input type="date" name="fecha" id="fecha" required>
+
+            <button type="submit">Guardar Registro</button>
+        </form>
+
+        <div class="back-link">
+            <a href="{% url 'index' %}">← Volver al inicio</a>
+        </div>
+    </div>
+
 </body>
 </html>
